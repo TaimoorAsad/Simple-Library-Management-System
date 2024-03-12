@@ -213,7 +213,7 @@ public class LibraryManagementSystem {
                 JOptionPane.showMessageDialog(frame, "Please Enter Complete User Info");
                 userName.requestFocus();
             } else {
-                int result = JOptionPane.showConfirmDialog(frame, "Insert this food data " + userNameString + "?", "Insert",
+                int result = JOptionPane.showConfirmDialog(frame, "Insert this User data " + userNameString + "?", "Insert",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
@@ -246,7 +246,7 @@ public class LibraryManagementSystem {
                 JOptionPane.showMessageDialog(frame, "Please Enter Complete Book Info");
                 bookTitle.requestFocus();
             } else {
-                int result = JOptionPane.showConfirmDialog(frame, "Insert this food data " + bookTitleString + "?", "Insert",
+                int result = JOptionPane.showConfirmDialog(frame, "Insert this Book data " + bookTitleString + "?", "Insert",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
