@@ -14,3 +14,4 @@
 --                        book_status TEXT
 --                     );
 -- DELETE FROM books WHERE book_id = "er"; 
+SELEct * from books;

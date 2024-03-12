@@ -17,14 +17,14 @@ import java.awt.event.ActionListener;
 public class LibraryManagementSystem {
 
     JTextField userId, userName, userContact, userBook, bookId, bookTitle, bookGenre, bookauthor, bookstatus;
-    // JTextArea jta_fooddesc;
+
     JButton userAdd, userDelete, userUpdate, userSearch, bookAdd, bookDelete, bookBorrow, bookReturn, bookSearch;
     JTable userTable, bookTable;
     JFrame frame;
     JLabel userIdLabel, userNameLabel, userContactLabel, userBooksLabel, bookIdLabel, bookTitleLabel, bookGenreLabel, bookauthorLabel, bookStatusLabel;
     ArrayList<User> userList;
     ArrayList<Book> bookList;
-    // Food food;
+
     String userHeader[] = new String[] {
             "User ID",
             "User Name",
@@ -35,7 +35,7 @@ public class LibraryManagementSystem {
         "Book ID",
         "Book Title",
         "Book Genre",
-        "Book author",
+        "Book Author",
         "Book Status"
 };
     
@@ -54,21 +54,11 @@ public class LibraryManagementSystem {
         }
     };
 
-    static Connection conn;
+    Connection conn;
     ResultSet rs;
     int row, col;
 
-    public static void main(String[] args) throws Exception {
-        Class.forName("org.sqlite.JDBC");
-        String url = "jdbc:sqlite:data.db";
-        conn = DriverManager.getConnection(url);
-        LibraryManagementSystem app = new LibraryManagementSystem();
-        app.mainInterface();
-        app.loadBookData();
-        app.loadUserData();
-    }
-
-    private void mainInterface() {
+    public void mainInterface() {
         frame = new JFrame();
 
         userIdLabel = new JLabel();
@@ -99,16 +89,6 @@ public class LibraryManagementSystem {
         userContact.setBounds(100, 75, 250, 25);
         frame.add(userContact);
 
-        // userBooksLabel = new JLabel();
-        // userBooksLabel.setText("Issue Book ID: ");
-        // userBooksLabel.setBounds(10, 80, 100, 50);
-        // frame.add(userBooksLabel);
-
-        // userBook = new JTextField();
-        // userBook.setBounds(100, 100, 250, 25);
-        // userBook.setBorder(new JTextField().getBorder());
-        // frame.add(userBook);
-
         userAdd = new JButton();
         userAdd.setText("Add");
         userAdd.setBounds(10, 140, 100, 25);
@@ -121,11 +101,6 @@ public class LibraryManagementSystem {
         frame.add(userDelete);
         userDelete.addActionListener(deleteUserListener);
 
-        // userUpdate = new JButton();
-        // userUpdate.setText("Update");
-        // userUpdate.setBounds(230, 140, 100, 25);
-        // frame.add(userUpdate);
-        // jb_update.addActionListener(updateFoodListener);
 
         userSearch = new JButton();
         userSearch.setText("Search");
@@ -139,11 +114,10 @@ public class LibraryManagementSystem {
         JScrollPane usersp = new JScrollPane(userTable);
         usersp.setBounds(10, 170, 360, 470);
         frame.add(usersp);
-        // jt.addMouseListener(mouseListener);
 
         frame.setSize(960, 700);
-        frame.setLayout(null); // using no layout managers
-        frame.setVisible(true); // making the frame visible
+        frame.setLayout(null); 
+        frame.setVisible(true); 
 
 
         bookIdLabel = new JLabel();
@@ -220,7 +194,6 @@ public class LibraryManagementSystem {
         JScrollPane booksp = new JScrollPane(bookTable);
         booksp.setBounds(405, 170, 530, 470);
         frame.add(booksp);
-        // // jt.addMouseListener(mouseListener);
 
 
         frame.setResizable(false);
@@ -290,7 +263,7 @@ public class LibraryManagementSystem {
         }
     };
 
-    private void loadUserData()  throws SQLException{
+    public void loadUserData()  throws SQLException{
         System.out.println("Load User data");
         userList = new ArrayList<>();
         Statement stmt = conn.createStatement();
@@ -299,7 +272,7 @@ public class LibraryManagementSystem {
         while (rs.next()) {
             userList.add(new User(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
         }
-        userdtm.setRowCount(0); // reset data model
+        userdtm.setRowCount(0); 
         for (int i = 0; i < userList.size(); i++) {
             Object[] objs = {
                     userList.get(i).id,
@@ -311,7 +284,7 @@ public class LibraryManagementSystem {
         }
     }
 
-    private void loadBookData()  throws SQLException{
+    public void loadBookData()  throws SQLException{
         System.out.println("Load Book data");
         bookList = new ArrayList<>();
         Statement stmt = conn.createStatement();
@@ -320,7 +293,7 @@ public class LibraryManagementSystem {
         while (rs.next()) {
             bookList.add(new Book(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
         }
-        bookdtm.setRowCount(0); // reset data model
+        bookdtm.setRowCount(0); 
         for (int i = 0; i < bookList.size(); i++) {
             Object[] objs = {
                     bookList.get(i).id,
@@ -484,7 +457,6 @@ ActionListener searchUserListener = new ActionListener() {
                 Statement stmt = conn.createStatement();
                 rs = stmt.executeQuery("SELECT * FROM users WHERE user_id = '" + userIdString + "'");
                 if (rs.next()) {
-                    // Assuming you have columns named "column1", "column2", etc.
                     JOptionPane.showMessageDialog(frame, "Searched User is:\n\nID: "+rs.getString(1) +"\nName: "+rs.getString(2) +"\nContact: " + rs.getString(3)+ "\nBook Isued: " + rs.getString(4));
                 } else {
                     JOptionPane.showMessageDialog(frame, "No User Found.");
@@ -513,7 +485,6 @@ ActionListener searchBookListener = new ActionListener() {
                 Statement stmt = conn.createStatement();
                 rs = stmt.executeQuery("SELECT * FROM books WHERE book_id = '" + bookIdString + "'");
                 if (rs.next()) {
-                    // Assuming you have columns named "column1", "column2", etc.
                     JOptionPane.showMessageDialog(frame, "Searched Book is:\n\nID: "+rs.getString(1) +"\nTitle: "+rs.getString(2) +"\nGenre: " + rs.getString(3)+ "\nTitle: " + rs.getString(4)+ "\nStatus: " + rs.getString(5));
                 } else {
                     JOptionPane.showMessageDialog(frame, "No Book Found.");
