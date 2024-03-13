@@ -62,7 +62,7 @@ public class Library {
 
     //main GUI of the Program    
     public void mainInterface() {
-        frame = new JFrame();
+        frame = new JFrame(" Library Management System");
 
         userIdLabel = new JLabel();
         userIdLabel.setText("User ID: ");
