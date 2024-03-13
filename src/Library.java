@@ -16,6 +16,8 @@ import java.awt.event.ActionListener;
 
 public class Library {
 
+    //Declaring objects 
+
     JTextField userId, userName, userContact, userBook, bookId, bookTitle, bookGenre, bookauthor, bookstatus;
 
     JButton userAdd, userDelete, userUpdate, userSearch, bookAdd, bookDelete, bookBorrow, bookReturn, bookSearch;
@@ -39,16 +41,15 @@ public class Library {
         "Book Status"
 };
     
+    //defining tablemodel
     DefaultTableModel bookdtm = new DefaultTableModel(0, 0)
     {
-        @Override
         public boolean isCellEditable(int row, int column) {
             return false;
         }
     };
     DefaultTableModel userdtm = new DefaultTableModel(0, 0)
     {
-        @Override
         public boolean isCellEditable(int row, int column) {
             return false;
         }
@@ -58,6 +59,8 @@ public class Library {
     ResultSet rs;
     int row, col;
 
+
+    //main GUI of the Program    
     public void mainInterface() {
         frame = new JFrame();
 
@@ -201,7 +204,7 @@ public class Library {
 
     }
 
-
+    //actionlistener for adding user in the database button
     ActionListener addUserListener = new ActionListener() {
         
         public void actionPerformed(ActionEvent e) {
@@ -233,7 +236,7 @@ public class Library {
             }
         }
     };
-    
+    //actionlistener for adding books in the database button
     ActionListener addBookListener = new ActionListener() {
         
         public void actionPerformed(ActionEvent e) {
@@ -262,7 +265,8 @@ public class Library {
             }
         }
     };
-
+    
+    //method to load user data into the table
     public void loadUserData()  throws SQLException{
         System.out.println("Load User data");
         userList = new ArrayList<>();
@@ -284,6 +288,7 @@ public class Library {
         }
     }
 
+    //method to load book data into the table
     public void loadBookData()  throws SQLException{
         System.out.println("Load Book data");
         bookList = new ArrayList<>();
@@ -306,7 +311,7 @@ public class Library {
         }
     }
 
-
+    //ActionListener for deleting user data button
     ActionListener deleteUserListener = new ActionListener() {
         
         public void actionPerformed(ActionEvent e) {
@@ -332,6 +337,7 @@ public class Library {
         }
     };
 
+    //ActionListener for deleting book data button
     ActionListener deleteBookListener = new ActionListener() {
         
         public void actionPerformed(ActionEvent e) {
@@ -357,7 +363,7 @@ public class Library {
         }
     };
 
-
+        //ActionListener for borrowing book button
     ActionListener borrowBookListener = new ActionListener() {
         
         public void actionPerformed(ActionEvent e) {
@@ -399,6 +405,7 @@ public class Library {
         }
     };
 
+        //ActionListener for returning book button
     ActionListener returnBookListener = new ActionListener() {
         
         public void actionPerformed(ActionEvent e) {
@@ -441,63 +448,64 @@ public class Library {
     };
 
 
-
-ActionListener searchUserListener = new ActionListener() {
-        
-    public void actionPerformed(ActionEvent e) {
-        String userIdString = JOptionPane.showInputDialog(frame, "Enter User ID to Search:");
-        try{
-        if (userIdString.isEmpty()) {
-            JOptionPane.showMessageDialog(frame, "Please Enter a User Id to Search");
-            }
-
-        else{
-            int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to Search User with ID " + userIdString + "?", "Confirm Search", JOptionPane.YES_NO_OPTION);
-            if(result == JOptionPane.YES_OPTION){
-                Statement stmt = conn.createStatement();
-                rs = stmt.executeQuery("SELECT * FROM users WHERE user_id = '" + userIdString + "'");
-                if (rs.next()) {
-                    JOptionPane.showMessageDialog(frame, "Searched User is:\n\nID: "+rs.getString(1) +"\nName: "+rs.getString(2) +"\nContact: " + rs.getString(3)+ "\nBook Isued: " + rs.getString(4));
-                } else {
-                    JOptionPane.showMessageDialog(frame, "No User Found.");
+    //ActionListener for searching user button
+    ActionListener searchUserListener = new ActionListener() {
+            
+        public void actionPerformed(ActionEvent e) {
+            String userIdString = JOptionPane.showInputDialog(frame, "Enter User ID to Search:");
+            try{
+            if (userIdString.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Please Enter a User Id to Search");
                 }
+
+            else{
+                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to Search User with ID " + userIdString + "?", "Confirm Search", JOptionPane.YES_NO_OPTION);
+                if(result == JOptionPane.YES_OPTION){
+                    Statement stmt = conn.createStatement();
+                    rs = stmt.executeQuery("SELECT * FROM users WHERE user_id = '" + userIdString + "'");
+                    if (rs.next()) {
+                        JOptionPane.showMessageDialog(frame, "Searched User is:\n\nID: "+rs.getString(1) +"\nName: "+rs.getString(2) +"\nContact: " + rs.getString(3)+ "\nBook Isued: " + rs.getString(4));
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "No User Found.");
+                    }
+            }
         }
     }
-}
-    catch (SQLException ex){
-        JOptionPane.showMessageDialog(frame, "Error" + ex.getMessage());
-    }
-    }
-};
+        catch (SQLException ex){
+            JOptionPane.showMessageDialog(frame, "Error" + ex.getMessage());
+        }
+        }
+    };
 
-ActionListener searchBookListener = new ActionListener() {
-        
-    public void actionPerformed(ActionEvent e) {
-        String bookIdString = JOptionPane.showInputDialog(frame, "Enter Book ID to Search:");
-        try{
-        if (bookIdString.isEmpty()) {
-            JOptionPane.showMessageDialog(frame, "Please Enter a Book Id to Search");
-            }
-
-        else{
-            int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to Search Book with ID " + bookIdString + "?", "Confirm Search", JOptionPane.YES_NO_OPTION);
-            if(result == JOptionPane.YES_OPTION){
-                Statement stmt = conn.createStatement();
-                rs = stmt.executeQuery("SELECT * FROM books WHERE book_id = '" + bookIdString + "'");
-                if (rs.next()) {
-                    JOptionPane.showMessageDialog(frame, "Searched Book is:\n\nID: "+rs.getString(1) +"\nTitle: "+rs.getString(2) +"\nGenre: " + rs.getString(3)+ "\nTitle: " + rs.getString(4)+ "\nStatus: " + rs.getString(5));
-                } else {
-                    JOptionPane.showMessageDialog(frame, "No Book Found.");
+        //ActionListener for searching book button
+    ActionListener searchBookListener = new ActionListener() {
+            
+        public void actionPerformed(ActionEvent e) {
+            String bookIdString = JOptionPane.showInputDialog(frame, "Enter Book ID to Search:");
+            try{
+            if (bookIdString.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Please Enter a Book Id to Search");
                 }
+
+            else{
+                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to Search Book with ID " + bookIdString + "?", "Confirm Search", JOptionPane.YES_NO_OPTION);
+                if(result == JOptionPane.YES_OPTION){
+                    Statement stmt = conn.createStatement();
+                    rs = stmt.executeQuery("SELECT * FROM books WHERE book_id = '" + bookIdString + "'");
+                    if (rs.next()) {
+                        JOptionPane.showMessageDialog(frame, "Searched Book is:\n\nID: "+rs.getString(1) +"\nTitle: "+rs.getString(2) +"\nGenre: " + rs.getString(3)+ "\nTitle: " + rs.getString(4)+ "\nStatus: " + rs.getString(5));
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "No Book Found.");
+                    }
+            }
         }
     }
-}
-    catch (SQLException ex){
-        JOptionPane.showMessageDialog(frame, "Error" + ex.getMessage());
+        catch (SQLException ex){
+            JOptionPane.showMessageDialog(frame, "Error" + ex.getMessage());
+        }
+        }
+    };
     }
-    }
-};
-}
 
 
 
