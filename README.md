@@ -10,11 +10,11 @@ This class represents a book object with attributes such as ID, title, author, g
 
 This class represents a user object with attributes such as ID, name, contact information, and a list of borrowed books.
 
-## LibraryManagementSystem.java
+## Library.java
 
 This class contains the main logic for the library management system. It includes a graphical user interface (GUI) implemented using Swing, and functionalities for adding, deleting, searching, borrowing, and returning books, as well as managing users.
 
-## Library.java
+## LibraryManagementSystem.java
 
 This class contains the main method to run the library management system. It initializes the necessary components and connects to the SQLite database.
 

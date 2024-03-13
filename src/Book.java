@@ -1,3 +1,5 @@
+//making a Book class with attributes and a constructor
+
 public class Book {
     String id;
     String title;
